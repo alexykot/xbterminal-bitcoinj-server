@@ -71,7 +71,7 @@ class PeerConnectedListener(AbstractPeerEventListener):
 
 class CoinsReceivedListener(AbstractWalletEventListener):
     def onCoinsReceived(self, wallet, transaction, prevBalance, newBalance):
-        print '>>>onPeerConnected', transaction, newBalance-prevBalance
+        print '>>>onCoinsReceived', transaction, 'oldbalance:', prevBalance, 'newbalance:', newBalance
 
 class WalletKitThread(threading.Thread):
     def __init__(self, wallet_kit):

@@ -199,7 +199,6 @@ class BitcoinjRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 "balance" : None,
                 "blocks" : None,
                 "timeoffset" : None,
-                "connections" : str(wallet_kit.peerGroup().numConnectedPeers()),
                 "difficulty" : None,
                 "testnet" : False,
                 "keypoololdest" : None,
@@ -209,6 +208,7 @@ class BitcoinjRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         if '--testnet' in sys.argv:
             data['testnet'] = True
         try:
+            data['connections'] = str(wallet_kit.peerGroup().numConnectedPeers())
             data['walletversion'] = str(wallet_kit_module.wallet.getVersion())
             data['balance'] = str(wallet_kit_module.wallet.getBalance())
         except AttributeError:
