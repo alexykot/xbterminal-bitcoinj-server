@@ -19,6 +19,7 @@ from com.google.bitcoin.core import (PeerAddress,
                                      Address,
                                      Transaction,
                                      TransactionInput,
+                                     Sha256Hash,
                                      Utils)
 from com.google.bitcoin.kits import WalletAppKit
 from com.google.bitcoin.params import MainNetParams, TestNet3Params

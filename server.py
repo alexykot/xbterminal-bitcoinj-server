@@ -7,8 +7,10 @@ import os
 import BaseHTTPServer
 import hashlib
 
-import wallet_kit as wallet_kit_module
 from java.io import File
+from java.lang import IllegalArgumentException
+
+import wallet_kit as wallet_kit_module
 
 
 include_path = os.path.abspath(os.path.join(__file__, os.pardir))
@@ -215,6 +217,22 @@ class BitcoinjRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             pass
 
         return data
+
+    def _get_getTransactionConfidence(self, transaction_hash):
+        """
+        http://bitcoinj.github.io/javadoc/0.11/com/google/bitcoin/core/TransactionConfidence.html
+        """
+        try:
+            transaction_hash_object = wallet_kit_module.Sha256Hash(transaction_hash)
+        except IllegalArgumentException:
+            return {'error': 'invalid transaction hash'}
+        transaction = wallet_kit_module.Transaction(
+            wallet_kit_module.bitcoin_network_params,
+            1,  # version 1 : https://en.bitcoin.it/wiki/Transactions
+            transaction_hash_object)
+        confidence = transaction.getConfidence()
+        confidence_type = str(confidence.getConfidenceType())
+        return {'confidence_type': confidence_type}
 
     def _post_sendRawTransaction(self, inputs, outputs):
         global wallet_kit_module
