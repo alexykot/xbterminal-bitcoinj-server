@@ -231,8 +231,10 @@ class BitcoinjRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             1,  # version 1 : https://en.bitcoin.it/wiki/Transactions
             transaction_hash_object)
         confidence = transaction.getConfidence()
-        confidence_type = str(confidence.getConfidenceType())
-        return {'confidence_type': confidence_type}
+        return {
+            'confidence_type': str(confidence.getConfidenceType()),
+            'broadcast_peers': str(confidence.numBroadcastPeers()),
+        }
 
     def _post_sendRawTransaction(self, inputs, outputs):
         global wallet_kit_module
