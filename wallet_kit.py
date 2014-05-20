@@ -67,7 +67,8 @@ class XBTerminalWalletKit(WalletAppKit):
 
 class PeerConnectedListener(AbstractPeerEventListener):
     def onPeerConnected(self, peer, peerCount):
-        print '>>>onPeerConnected', peer
+        version_message = peer.getPeerVersionMessage()
+        print '>>>onPeerConnected', peer, version_message.subVer
 
 class CoinsReceivedListener(AbstractWalletEventListener):
     def onCoinsReceived(self, wallet, transaction, prevBalance, newBalance):
