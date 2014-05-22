@@ -19,6 +19,7 @@ from com.google.bitcoin.core import (PeerAddress,
                                      Address,
                                      Transaction,
                                      TransactionInput,
+                                     Sha256Hash,
                                      Utils)
 from com.google.bitcoin.kits import WalletAppKit
 from com.google.bitcoin.params import MainNetParams, TestNet3Params
@@ -34,14 +35,12 @@ if '--testnet' in sys.argv:
     bitcoin_network_params = TestNet3Params.get()
 else:
     bitcoin_network_params = MainNetParams.get()
+
 TRUSTED_PEERS_LIST = [
-                      # PeerAddress(InetAddress.getByName('127.0.0.1'),
-                      #             bitcoin_network_params.getPort(),
-                      #             bitcoin_network_params.PROTOCOL_VERSION),
-                      # PeerAddress(InetAddress.getByName('46.105.173.28'),
-                      #             bitcoin_network_params.getPort(),
-                      #             bitcoin_network_params.PROTOCOL_VERSION),
-                        ]
+    PeerAddress(InetAddress.getByName('alexykot.me'),
+                bitcoin_network_params.getPort(),
+                bitcoin_network_params.PROTOCOL_VERSION),
+]
 MAX_PEER_CONNECTIONS = 10
 wallet = None
 
