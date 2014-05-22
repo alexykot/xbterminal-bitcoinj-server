@@ -59,17 +59,14 @@ class BitcoinjRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             local_call_name, params = self._parsePath()
         except BitcoinjServerException as error:
             self._send_response(error.http_code, json.dumps(self.responses[error.http_code]))
+            return
 
-        response_body = ''
         local_call_full_name = '_get_{call}'.format(call=local_call_name)
         if hasattr(self, local_call_full_name):
             response_body = getattr(self, local_call_full_name)(**params)
+            self._send_response(200, json.dumps(response_body))
         else:
             self._send_response(404, json.dumps(self.responses[404]))
-            return
-
-
-        self._send_response(200, json.dumps(response_body))
 
     def do_POST(self):
         try:
@@ -79,15 +76,14 @@ class BitcoinjRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             params = dict(params.items() + post_data.items())
         except BitcoinjServerException as error:
             self._send_response(error.http_code, json.dumps(self.responses[error.http_code]))
-
-        response_body = ''
-        if hasattr(self, '_post_{call}'.format(call=local_call_name)):
-            response_body = getattr(self, '_post_{call}'.format(call=local_call_name))(**params)
-        else:
-            self._send_response(404, json.dumps(self.responses[404]))
             return
 
-        self._send_response(200, json.dumps(response_body))
+        local_call_full_name = '_post_{call}'.format(call=local_call_name)
+        if hasattr(self, local_call_full_name):
+            response_body = getattr(self, local_call_full_name)(**params)
+            self._send_response(200, json.dumps(response_body))
+        else:
+            self._send_response(404, json.dumps(self.responses[404]))
 
     def _getPostData(self):
         try:
