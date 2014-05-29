@@ -6,7 +6,7 @@ import threading
 import time
 
 include_path = os.path.abspath(os.path.join(__file__, os.pardir))
-sys.path.append(os.path.join(include_path, 'jar', 'bitcoinj-0.12-bundled.jar'))
+sys.path.append(os.path.join(include_path, 'jar', 'bitcoinj-0.11-bundled.jar'))
 sys.path.append(os.path.join(include_path, 'jar', 'slf4j-simple-1.7.6.jar'))
 
 

@@ -1,14 +1,16 @@
 #!/opt/jython/jython -Dorg.slf4j.simpleLogger.defaultLogLevel=error
 # -*- coding: utf-8 -*-
 from decimal import Decimal
-import json
 import sys
 import os
 import BaseHTTPServer
 import hashlib
 
+include_path = os.path.abspath(os.path.join(__file__, os.pardir))
+sys.path.append(os.path.join(include_path, 'jar', 'jyson-1.0.2.jar'))
+from com.xhaus.jyson import JysonCodec as json
 from java.io import File
-from java.lang import IllegalArgumentException
+from java.lang import IllegalArgumentException, NullPointerException
 
 import wallet_kit as wallet_kit_module
 
